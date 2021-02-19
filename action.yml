@@ -1,11 +1,14 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Determine Yarn 2 CI build targets from changed files'
+
 inputs:
-  milliseconds: # change this
+  files:
+    description: Array of all changed files to validate, encoded as a JSON array
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+
+outputs:
+  targets:
+    description: The list of Yarn workspaces to target, encoded as a JSON array
+
 runs:
   using: 'node12'
   main: 'dist/index.js'

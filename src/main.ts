@@ -1,19 +1,29 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
 
-async function run(): Promise<void> {
+import listYarnWorkspaces from './listYarnWorkspaces'
+import YarnGraph from './YarnGraph'
+
+const main = async (): Promise<void> => {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+    const files: string[] = JSON.parse(core.getInput('files', {required: true}))
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    core.info('Building worktree dependency graph')
+    const graph = new YarnGraph(await listYarnWorkspaces())
 
-    core.setOutput('time', new Date().toTimeString())
-  } catch (error) {
-    core.setFailed(error.message)
+    core.startGroup('Identifying directly modified workspaces')
+    const changedWorkspaces = await graph.getWorkspacesForFiles(...files)
+    core.endGroup()
+    core.info(`Affected workspaces [${changedWorkspaces.join(', ')}]`)
+
+    core.startGroup('Identifying dependent workspaces')
+    const targetWorkspaces = graph.getRecursiveDependents(...changedWorkspaces)
+    core.endGroup()
+    core.info(`Target workspaces [${targetWorkspaces.join(', ')}]`)
+
+    core.setOutput('targets', targetWorkspaces)
+  } catch (err) {
+    core.setFailed(err)
   }
 }
 
-run()
+main()
