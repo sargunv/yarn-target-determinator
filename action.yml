@@ -1,5 +1,5 @@
-name: "Yarn target determinator"
-description: "Determine Yarn 2 CI build targets from changed files"
+name: Yarn Target Determinator
+description: Determine a list of Yarn 2 workspaces to test using a list of changed files.
 
 branding:
   icon: target
@@ -12,8 +12,8 @@ inputs:
 
 outputs:
   targets:
-    description: The list of Yarn workspaces to target, encoded as a JSON array
+    description: The list of Yarn workspaces to test, encoded as a JSON array
 
 runs:
-  using: "node12"
-  main: "dist/index.js"
+  using: node12
+  main: dist/index.js

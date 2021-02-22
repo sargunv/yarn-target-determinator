@@ -83,3 +83,16 @@ jobs:
       - run: yarn workspaces focus ${{ matrix.target }}
       - run: yarn workspace ${{ matrix.target }} run test
 ```
+
+## Inputs and outputs
+
+```
+inputs:
+  files:
+    description: Array of all changed files to validate, encoded as a JSON array
+    required: true
+
+outputs:
+  targets:
+    description: The list of Yarn workspaces to test, encoded as a JSON array
+```
