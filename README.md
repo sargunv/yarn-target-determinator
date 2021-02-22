@@ -18,10 +18,9 @@ that changed, as well as which other workspaces depend on the changed
 workspaces, and so on. It's best used alongside
 https://github.com/jitterbit/get-changed-files.
 
-This action makes a few assumptions:
+This action makes a couple assumptions:
 
-- You're using [Yarn 2](https://yarnpkg.com/getting-started/install)
-- You're using [Yarn Workspaces](https://yarnpkg.com/features/workspaces) with a
+- You're using [Yarn 2](https://yarnpkg.com/getting-started/install) with a
   single worktree at the root of your repo.
 - All `package.json` files in your repo are for workspaces that are members of
   the root worktree.
