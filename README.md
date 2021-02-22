@@ -4,7 +4,7 @@
   input list of changed files.
 <p>
 <p align="center">
-  <img alt="Build status" src="https://github.com/sargunv/yarn-target-determinator/actions/workflows/ci.yml/badge.svg?branch=main&event=push">
+  <img alt="Build status" src="https://img.shields.io/github/workflow/status/sargunv/yarn-target-determinator/CI/main">
   <img alt="Latest release" src="https://img.shields.io/github/v/release/sargunv/yarn-target-determinator">
   <img alt="Last commit time" src="https://img.shields.io/github/last-commit/sargunv/yarn-target-determinator">
 </p>
