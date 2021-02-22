@@ -1,4 +1,4 @@
-<h3 align="center">Yarn Target Determinator</h3>
+<h1 align="center">Yarn Target Determinator</h3>
 <p align="center">
   A GitHub Action that determines a list of Yarn 2 workspaces to test using an
   input list of changed files.
