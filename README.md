@@ -11,20 +11,23 @@
 
 ## Overview
 
-This Action determines a list of Yarn 2 workspaces that need to be tested based
+This action determines a list of Yarn 2 workspaces that need to be tested based
 on an input list of changed files. It'll return a list containing the workspaces
 that changed, as well as which other workspaces depend on the changed
 workspaces, and so on. It's best used alongside
 https://github.com/jitterbit/get-changed-files.
 
-This Action makes a few assumptions:
+This action makes a few assumptions:
 
-- You're using Yarn 2 and have the `workspace-tools` plugin installed.
+- You're using [Yarn 2](https://yarnpkg.com/getting-started/install) and have the 
+  [`workspace-tools`](https://yarnpkg.com/api/modules/plugin_workspace_tools.html)
+  plugin installed: `yarn plugin import workspace-tools`.
 - You're using [Yarn Workspaces](https://yarnpkg.com/features/workspaces) with a
-  single worktree at the root of your repo. PRs to support arbitrary worktree
-  structures are welcome.
+  single worktree at the root of your repo.
 - All `package.json` files in your repo are for workspaces that are members of
-  the root worktree. PRs to support multi-root repo structures are welcome.
+  the root worktree.
+  
+PRs to lift these restrictions are welcome.
 
 ## Example
 
