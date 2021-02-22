@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - id: get-cache-path
+        run: echo "::set-output name=path::$(yarn config get cacheFolder)"
+      - uses: actions/cache@v2
+        with:
+          path: ${{ steps.get-cache-path.outputs.path }}
+          key: yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: yarn-
+      - run: yarn install
+      - run: yarn build
+      - run: ls dist
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          file_pattern: dist
+          commit_message: yarn build

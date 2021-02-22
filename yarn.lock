@@ -28,21 +28,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.14.9":
+"@types/node@npm:^14.14.31":
   version: 14.14.31
   resolution: "@types/node@npm:14.14.31"
   checksum: 635dc8a0898a923621e02ca179e17baa39fdfa44f0096fcc1b7046c9b32317e74a99956a7b45ca0e8069874f51f4e7873a418239a318a4b6e7936f6510ac5992
   languageName: node
   linkType: hard
 
-"@vercel/ncc@npm:^0.25.1":
-  version: 0.25.1
-  resolution: "@vercel/ncc@npm:0.25.1"
+"@vercel/ncc@npm:^0.27.0":
+  version: 0.27.0
+  resolution: "@vercel/ncc@npm:0.27.0"
   dependencies:
     node-gyp: latest
   bin:
     ncc: dist/ncc/cli.js
-  checksum: f64999957f06c150a2113eab60358d28762e7c6ee3853ed7328f171ef40a25ec3d02f6a30ca9230ddbec1ca70eed366ecbc349b5bd34c7f27b52dfd79cf597e0
+  checksum: ce8fbde30502da756b804b81e5203031a227a42d175c654381f36d81417d1ba2c06fd2ffc2514a61beb44bfd361b443a454f688cc4a98eeccd300bc5558c4e9a
   languageName: node
   linkType: hard
 
@@ -1036,8 +1036,8 @@ typescript@^4.1.5:
   dependencies:
     "@actions/core": ^1.2.6
     "@actions/exec": ^1.0.4
-    "@types/node": ^14.14.9
-    "@vercel/ncc": ^0.25.1
+    "@types/node": ^14.14.31
+    "@vercel/ncc": ^0.27.0
     pkg-dir: ^5.0.0
     typescript: ^4.1.5
   languageName: unknown
