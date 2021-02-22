@@ -1,8 +1,9 @@
 name: "Yarn target determinator"
 description: "Determine Yarn 2 CI build targets from changed files"
 
-icon: target
-color: red
+branding:
+  icon: target
+  color: red
 
 inputs:
   files:
