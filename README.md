@@ -68,9 +68,7 @@ jobs:
         with:
           files: ${{ steps.get-changed-files.outputs.all }}
       - id: set-targets
-        run:
-          echo '::set-output name=targets::${{
-          steps.target-determinator.outputs.targets }}'
+        run: echo '::set-output name=targets::${{ steps.target-determinator.outputs.targets }}'
 
   test:
     runs-on: ubuntu-20.04
