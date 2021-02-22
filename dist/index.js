@@ -2,255 +2,7 @@ require('./sourcemap-register.js');module.exports =
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 219:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const path_1 = __importDefault(__webpack_require__(622));
-const core = __importStar(__webpack_require__(186));
-const pkg_dir_1 = __importDefault(__webpack_require__(98));
-class YarnGraph {
-    constructor(workspaceList) {
-        this.graph = this.buildGraph(workspaceList);
-    }
-    getRecursiveDependents(...initialIds) {
-        const resultSet = new Set();
-        // standard depth-first search
-        const queue = [...initialIds];
-        for (const id of queue) {
-            if (!resultSet.has(id)) {
-                const node = this.graph.byId[id];
-                if (node == null) {
-                    throw new Error(`Workspace '${id}' not registered in root worktree`);
-                }
-                resultSet.add(id);
-                for (const dependent of node.dependents) {
-                    core.info(`${dependent} depends on ${node.workspaceId}`);
-                }
-                queue.push(...node.dependents);
-            }
-        }
-        return [...resultSet];
-    }
-    getWorkspacesForFiles(...files) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const resultSet = new Set();
-            const workspaceDirs = new Set(yield Promise.all(files.map((file) => __awaiter(this, void 0, void 0, function* () {
-                const workspaceDir = yield pkg_dir_1.default(path_1.default.dirname(path_1.default.resolve(file)));
-                if (workspaceDir !== undefined) {
-                    core.info(`Found workspace '${workspaceDir}' for file '${file}'`);
-                }
-                else {
-                    core.warning(`Workspace not found for file '${file}'`);
-                }
-                return workspaceDir;
-            }))));
-            for (const workspaceDir of workspaceDirs) {
-                if (workspaceDir === undefined)
-                    continue;
-                const workspaceId = this.getWorkspaceId(workspaceDir);
-                core.info(`Workspace '${workspaceDir}' identified as ${workspaceId}`);
-                resultSet.add(workspaceId);
-            }
-            return [...resultSet];
-        });
-    }
-    getWorkspaceId(dir) {
-        var _a;
-        const id = (_a = this.graph.byDir[path_1.default.resolve(dir)]) === null || _a === void 0 ? void 0 : _a.workspaceId;
-        if (id == null) {
-            throw new Error(`Workspace at '${dir}' not registered in root worktree`);
-        }
-        return id;
-    }
-    buildGraph(items) {
-        const graphById = {};
-        const dirToId = {};
-        // build initial graph with dependency links
-        for (const item of items) {
-            const node = (graphById[item.name] = {
-                workspaceId: item.name,
-                workspaceDir: path_1.default.resolve(item.location),
-                dependencies: item.workspaceDependencies,
-                dependents: []
-            });
-            dirToId[node.workspaceDir] = node.workspaceId;
-        }
-        // build the reverse dependency links
-        for (const item of items) {
-            const name = item.name;
-            for (const depLocation of item.workspaceDependencies) {
-                graphById[dirToId[path_1.default.resolve(depLocation)]].dependents.push(name);
-            }
-        }
-        // populate the graph with directory lookup too
-        const graphByDir = {};
-        for (const id in graphById) {
-            const node = graphById[id];
-            graphByDir[node.workspaceDir] = node;
-        }
-        return { byId: graphById, byDir: graphByDir };
-    }
-}
-exports.default = YarnGraph;
-
-
-/***/ }),
-
-/***/ 987:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const exec = __importStar(__webpack_require__(514));
-const listYarnWorkspaces = () => __awaiter(void 0, void 0, void 0, function* () {
-    const buf = [];
-    yield exec.exec('yarn workspaces', ['list', '-v', '--json'], {
-        silent: true,
-        listeners: {
-            stdout: data => {
-                buf.push(data);
-            }
-        }
-    });
-    return buf
-        .join('')
-        .trim()
-        .split('\n')
-        .map(str => JSON.parse(str));
-});
-exports.default = listYarnWorkspaces;
-
-
-/***/ }),
-
-/***/ 109:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core = __importStar(__webpack_require__(186));
-const listYarnWorkspaces_1 = __importDefault(__webpack_require__(987));
-const YarnGraph_1 = __importDefault(__webpack_require__(219));
-const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const files = JSON.parse(core.getInput('files', { required: true }));
-        core.info('Building worktree dependency graph');
-        const graph = new YarnGraph_1.default(yield listYarnWorkspaces_1.default());
-        core.startGroup('Identifying directly modified workspaces');
-        const changedWorkspaces = yield graph.getWorkspacesForFiles(...files);
-        core.endGroup();
-        core.info(`Affected workspaces [${changedWorkspaces.join(', ')}]`);
-        core.startGroup('Identifying dependent workspaces');
-        const targetWorkspaces = graph.getRecursiveDependents(...changedWorkspaces);
-        core.endGroup();
-        core.info(`Target workspaces [${targetWorkspaces.join(', ')}]`);
-        core.setOutput('targets', targetWorkspaces);
-    }
-    catch (err) {
-        core.setFailed(err);
-    }
-});
-main();
-
-
-/***/ }),
-
-/***/ 351:
+/***/ 521:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -264,7 +16,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const os = __importStar(__webpack_require__(87));
-const utils_1 = __webpack_require__(278);
+const utils_1 = __webpack_require__(547);
 /**
  * Commands
  *
@@ -336,7 +88,7 @@ function escapeProperty(s) {
 
 /***/ }),
 
-/***/ 186:
+/***/ 217:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -358,9 +110,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const command_1 = __webpack_require__(351);
-const file_command_1 = __webpack_require__(717);
-const utils_1 = __webpack_require__(278);
+const command_1 = __webpack_require__(521);
+const file_command_1 = __webpack_require__(447);
+const utils_1 = __webpack_require__(547);
 const os = __importStar(__webpack_require__(87));
 const path = __importStar(__webpack_require__(622));
 /**
@@ -581,7 +333,7 @@ exports.getState = getState;
 
 /***/ }),
 
-/***/ 717:
+/***/ 447:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -599,7 +351,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const fs = __importStar(__webpack_require__(747));
 const os = __importStar(__webpack_require__(87));
-const utils_1 = __webpack_require__(278);
+const utils_1 = __webpack_require__(547);
 function issueCommand(command, message) {
     const filePath = process.env[`GITHUB_${command}`];
     if (!filePath) {
@@ -617,7 +369,7 @@ exports.issueCommand = issueCommand;
 
 /***/ }),
 
-/***/ 278:
+/***/ 547:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -643,7 +395,7 @@ exports.toCommandValue = toCommandValue;
 
 /***/ }),
 
-/***/ 514:
+/***/ 398:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -665,7 +417,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const tr = __importStar(__webpack_require__(159));
+const tr = __importStar(__webpack_require__(819));
 /**
  * Exec a command.
  * Output will be streamed to the live console.
@@ -694,7 +446,7 @@ exports.exec = exec;
 
 /***/ }),
 
-/***/ 159:
+/***/ 819:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -720,8 +472,8 @@ const os = __importStar(__webpack_require__(87));
 const events = __importStar(__webpack_require__(614));
 const child = __importStar(__webpack_require__(129));
 const path = __importStar(__webpack_require__(622));
-const io = __importStar(__webpack_require__(436));
-const ioUtil = __importStar(__webpack_require__(962));
+const io = __importStar(__webpack_require__(453));
+const ioUtil = __importStar(__webpack_require__(420));
 /* eslint-disable @typescript-eslint/unbound-method */
 const IS_WINDOWS = process.platform === 'win32';
 /*
@@ -1301,7 +1053,7 @@ class ExecState extends events.EventEmitter {
 
 /***/ }),
 
-/***/ 962:
+/***/ 420:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -1503,7 +1255,7 @@ function isUnixExecutable(stats) {
 
 /***/ }),
 
-/***/ 436:
+/***/ 453:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -1521,7 +1273,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const childProcess = __webpack_require__(129);
 const path = __webpack_require__(622);
 const util_1 = __webpack_require__(669);
-const ioUtil = __webpack_require__(962);
+const ioUtil = __webpack_require__(420);
 const exec = util_1.promisify(childProcess.exec);
 /**
  * Copies a file or folder.
@@ -1806,31 +1558,8 @@ function copyFile(srcFile, destFile, force) {
 "use strict";
 
 const path = __webpack_require__(622);
-const findUp = __webpack_require__(812);
-
-const pkgDir = async cwd => {
-	const filePath = await findUp('package.json', {cwd});
-	return filePath && path.dirname(filePath);
-};
-
-module.exports = pkgDir;
-
-module.exports.sync = cwd => {
-	const filePath = findUp.sync('package.json', {cwd});
-	return filePath && path.dirname(filePath);
-};
-
-
-/***/ }),
-
-/***/ 812:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-const path = __webpack_require__(622);
-const locatePath = __webpack_require__(937);
-const pathExists = __webpack_require__(995);
+const locatePath = __webpack_require__(639);
+const pathExists = __webpack_require__(10);
 
 const stop = Symbol('findUp.stop');
 
@@ -1920,7 +1649,7 @@ module.exports.stop = stop;
 
 /***/ }),
 
-/***/ 937:
+/***/ 639:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1928,7 +1657,7 @@ module.exports.stop = stop;
 const path = __webpack_require__(622);
 const fs = __webpack_require__(747);
 const {promisify} = __webpack_require__(669);
-const pLocate = __webpack_require__(249);
+const pLocate = __webpack_require__(41);
 
 const fsStat = promisify(fs.stat);
 const fsLStat = promisify(fs.lstat);
@@ -1996,12 +1725,12 @@ module.exports.sync = (paths, options) => {
 
 /***/ }),
 
-/***/ 752:
+/***/ 445:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
-const Queue = __webpack_require__(185);
+const Queue = __webpack_require__(943);
 
 const pLimit = concurrency => {
 	if (!((Number.isInteger(concurrency) || concurrency === Infinity) && concurrency > 0)) {
@@ -2075,12 +1804,12 @@ module.exports = pLimit;
 
 /***/ }),
 
-/***/ 249:
+/***/ 41:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
-const pLimit = __webpack_require__(752);
+const pLimit = __webpack_require__(445);
 
 class EndError extends Error {
 	constructor(value) {
@@ -2133,7 +1862,7 @@ module.exports = pLocate;
 
 /***/ }),
 
-/***/ 995:
+/***/ 10:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -2164,7 +1893,30 @@ module.exports.sync = path => {
 
 /***/ }),
 
-/***/ 185:
+/***/ 478:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+const path = __webpack_require__(622);
+const findUp = __webpack_require__(98);
+
+const pkgDir = async cwd => {
+	const filePath = await findUp('package.json', {cwd});
+	return filePath && path.dirname(filePath);
+};
+
+module.exports = pkgDir;
+
+module.exports.sync = cwd => {
+	const filePath = findUp.sync('package.json', {cwd});
+	return filePath && path.dirname(filePath);
+};
+
+
+/***/ }),
+
+/***/ 943:
 /***/ ((module) => {
 
 class Node {
@@ -2235,6 +1987,253 @@ class Queue {
 }
 
 module.exports = Queue;
+
+
+/***/ }),
+
+/***/ 324:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const path_1 = __importDefault(__webpack_require__(622));
+const core = __importStar(__webpack_require__(217));
+const pkg_dir_1 = __importDefault(__webpack_require__(478));
+class YarnGraph {
+    constructor(workspaceList) {
+        this.graph = this.buildGraph(workspaceList);
+    }
+    getRecursiveDependents(...initialIds) {
+        const resultSet = new Set();
+        // breadth-first search
+        const queue = [...initialIds];
+        for (const id of queue) {
+            if (!resultSet.has(id)) {
+                const node = this.graph.byId[id];
+                if (!node) {
+                    throw new Error(`Workspace '${id}' not registered in root worktree`);
+                }
+                resultSet.add(id);
+                for (const dependent of node.dependents) {
+                    core.info(`${dependent} depends on ${node.workspaceId}`);
+                }
+                queue.push(...node.dependents);
+            }
+        }
+        return [...resultSet];
+    }
+    getWorkspacesForFiles(...files) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const resultSet = new Set();
+            const workspaceDirs = new Set(yield Promise.all(files.map((file) => __awaiter(this, void 0, void 0, function* () {
+                const workspaceDir = yield pkg_dir_1.default(path_1.default.dirname(path_1.default.resolve(file)));
+                if (workspaceDir !== undefined) {
+                    core.info(`Found workspace '${workspaceDir}' for file '${file}'`);
+                }
+                else {
+                    core.warning(`Workspace not found for file '${file}'`);
+                }
+                return workspaceDir;
+            }))));
+            for (const workspaceDir of workspaceDirs) {
+                if (workspaceDir === undefined)
+                    continue;
+                const workspaceId = this.getWorkspaceId(workspaceDir);
+                core.info(`Workspace '${workspaceDir}' identified as ${workspaceId}`);
+                resultSet.add(workspaceId);
+            }
+            return [...resultSet];
+        });
+    }
+    getWorkspaceId(dir) {
+        var _a;
+        const id = (_a = this.graph.byDir[path_1.default.resolve(dir)]) === null || _a === void 0 ? void 0 : _a.workspaceId;
+        if (!id) {
+            throw new Error(`Workspace at '${dir}' not registered in root worktree`);
+        }
+        return id;
+    }
+    buildGraph(items) {
+        const graphById = {};
+        const dirToId = {};
+        // build initial graph with dependency links
+        for (const item of items) {
+            const node = (graphById[item.name] = {
+                workspaceId: item.name,
+                workspaceDir: path_1.default.resolve(item.location),
+                dependencies: item.workspaceDependencies,
+                dependents: [],
+            });
+            dirToId[node.workspaceDir] = node.workspaceId;
+        }
+        // build the reverse dependency links
+        for (const item of items) {
+            const name = item.name;
+            for (const depLocation of item.workspaceDependencies) {
+                graphById[dirToId[path_1.default.resolve(depLocation)]].dependents.push(name);
+            }
+        }
+        // populate the graph with directory lookup too
+        const graphByDir = {};
+        for (const node of Object.values(graphById)) {
+            graphByDir[node.workspaceDir] = node;
+        }
+        return { byId: graphById, byDir: graphByDir };
+    }
+}
+exports.default = YarnGraph;
+
+
+/***/ }),
+
+/***/ 189:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const exec = __importStar(__webpack_require__(398));
+const listYarnWorkspaces = () => __awaiter(void 0, void 0, void 0, function* () {
+    const output = [];
+    yield exec.exec("yarn workspaces", ["list", "-v", "--json"], {
+        silent: true,
+        listeners: {
+            stdout: (data) => {
+                output.push(data);
+            },
+        },
+    });
+    return output
+        .join("")
+        .trim()
+        .split("\n")
+        .map((str) => JSON.parse(str));
+});
+exports.default = listYarnWorkspaces;
+
+
+/***/ }),
+
+/***/ 714:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const core = __importStar(__webpack_require__(217));
+const listYarnWorkspaces_1 = __importDefault(__webpack_require__(189));
+const YarnGraph_1 = __importDefault(__webpack_require__(324));
+const main = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const files = JSON.parse(core.getInput("files", { required: true }));
+        core.info("Building worktree dependency graph");
+        const graph = new YarnGraph_1.default(yield listYarnWorkspaces_1.default());
+        core.startGroup("Identifying directly modified workspaces");
+        const changedWorkspaces = yield graph.getWorkspacesForFiles(...files);
+        core.endGroup();
+        core.info(`Affected workspaces [${changedWorkspaces.join(", ")}]`);
+        core.startGroup("Identifying dependent workspaces");
+        const targetWorkspaces = graph.getRecursiveDependents(...changedWorkspaces);
+        core.endGroup();
+        core.info(`Target workspaces [${targetWorkspaces.join(", ")}]`);
+        core.setOutput("targets", targetWorkspaces);
+    }
+    catch (err) {
+        core.setFailed(err);
+    }
+});
+main();
 
 
 /***/ }),
@@ -2333,7 +2332,7 @@ module.exports = require("util");;
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(109);
+/******/ 	return __webpack_require__(714);
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map

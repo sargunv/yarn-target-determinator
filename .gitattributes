@@ -1,1 +1,8 @@
-dist/** -diff linguist-generated=true 
+* text=auto
+* text eol=lf
+
+*.zip binary
+.yarn/* linguist-vendored=true
+.pnp.js linguist-vendored=true
+
+dist/** -diff linguist-generated=true

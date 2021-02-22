@@ -1,26 +1,26 @@
-import * as exec from '@actions/exec'
+import * as exec from "@actions/exec";
 
 export interface YarnWorkspacesListItem {
-  location: string
-  name: string
-  workspaceDependencies: string[]
+  location: string;
+  name: string;
+  workspaceDependencies: string[];
 }
 
 const listYarnWorkspaces = async (): Promise<YarnWorkspacesListItem[]> => {
-  const buf: Buffer[] = []
-  await exec.exec('yarn workspaces', ['list', '-v', '--json'], {
+  const output: Buffer[] = [];
+  await exec.exec("yarn workspaces", ["list", "-v", "--json"], {
     silent: true,
     listeners: {
-      stdout: data => {
-        buf.push(data)
-      }
-    }
-  })
-  return buf
-    .join('')
+      stdout: (data) => {
+        output.push(data);
+      },
+    },
+  });
+  return output
+    .join("")
     .trim()
-    .split('\n')
-    .map(str => JSON.parse(str))
-}
+    .split("\n")
+    .map((str) => JSON.parse(str));
+};
 
-export default listYarnWorkspaces
+export default listYarnWorkspaces;
