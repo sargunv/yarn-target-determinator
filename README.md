@@ -5,8 +5,9 @@
 <p>
 <p align="center">
   <img alt="Build status" src="https://img.shields.io/github/workflow/status/sargunv/yarn-target-determinator/CI/main">
-  <img alt="Latest release" src="https://img.shields.io/github/v/release/sargunv/yarn-target-determinator">
   <img alt="Last commit time" src="https://img.shields.io/github/last-commit/sargunv/yarn-target-determinator">
+  <img alt="Latest release" src="https://img.shields.io/github/v/release/sargunv/yarn-target-determinator">
+  <img alt="License" src="https://img.shields.io/github/license/sargunv/yarn-target-determinator">
 </p>
 
 ## Overview
@@ -19,9 +20,7 @@ https://github.com/jitterbit/get-changed-files.
 
 This action makes a few assumptions:
 
-- You're using [Yarn 2](https://yarnpkg.com/getting-started/install) and have the 
-  [`workspace-tools`](https://yarnpkg.com/api/modules/plugin_workspace_tools.html)
-  plugin installed: `yarn plugin import workspace-tools`.
+- You're using [Yarn 2](https://yarnpkg.com/getting-started/install)
 - You're using [Yarn Workspaces](https://yarnpkg.com/features/workspaces) with a
   single worktree at the root of your repo.
 - All `package.json` files in your repo are for workspaces that are members of
