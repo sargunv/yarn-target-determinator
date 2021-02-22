@@ -1,7 +1,7 @@
 <h3 align="center">Yarn Target Determinator</h3>
 <p align="center">
-  A GitHub Action that determines a list of Yarn 2 workspaces to test using a
-  list of changed files.
+  A GitHub Action that determines a list of Yarn 2 workspaces to test using an
+  input list of changed files.
 <p>
 <p align="center">
   <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/sargunv/yarn-target-determinator/CI?style=flat-square">
@@ -17,24 +17,23 @@ that changed, as well as which other workspaces depend on the changed
 workspaces, and so on. It's best used alongside
 https://github.com/jitterbit/get-changed-files.
 
-It requires the Yarn
-[workspace-tools](https://yarnpkg.com/api/modules/plugin_workspace_tools.html)
-plugin to be installed in your repo!
-
 This Action makes a few assumptions:
 
 - You're using Yarn 2 and have the `workspace-tools` plugin installed.
 - You're using [Yarn Workspaces](https://yarnpkg.com/features/workspaces) with a
-  single worktree at the root of your repo.
+  single worktree at the root of your repo. PRs to support arbitrary worktree
+  structures are welcome.
 - All `package.json` files in your repo are for workspaces that are members of
-  the root worktree.
+  the root worktree. PRs to support multi-root repo structures are welcome.
 
 ## Example
 
 Imagine a Yarn 2 monorepo with two workspaces `frontend` and `backend` that
 depend on a third workspace `common`. If somebody opens a PR that changes just
 the `frontend` workspace, the workflow below will run the `test` job on only
-`frontend`. If another PR touches files in `common`. the workflow below will
+`frontend`. 
+
+If another PR touches files in `common`. the workflow below will
 understand the dependency tree and run the `test` job on `common`, `frontend`,
 and `backend`.
 
@@ -85,7 +84,7 @@ jobs:
 
 ## Inputs and outputs
 
-```
+```yaml
 inputs:
   files:
     description: Array of all changed files to validate, encoded as a JSON array
