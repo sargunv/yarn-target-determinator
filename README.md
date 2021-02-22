@@ -4,9 +4,9 @@
   input list of changed files.
 <p>
 <p align="center">
-  <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/sargunv/yarn-target-determinator/CI?style=flat-square">
-  <img alt="GitHub tag (latest SemVer)" src="https://img.shields.io/github/v/tag/sargunv/yarn-target-determinator?style=flat-square">
-  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/sargunv/yarn-target-determinator?style=flat-square">
+  <img alt="Build status" src="https://github.com/sargunv/yarn-target-determinator/actions/workflows/ci.yml/badge.svg?branch=main&event=push">
+  <img alt="Latest release" src="https://img.shields.io/github/v/release/sargunv/yarn-target-determinator">
+  <img alt="Last commit time" src="https://img.shields.io/github/last-commit/sargunv/yarn-target-determinator">
 </p>
 
 ## Overview
