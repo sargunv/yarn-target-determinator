@@ -40,7 +40,7 @@ If another PR touches files in `common`. the workflow below will
 understand the dependency tree and run the `test` job on `common`, `frontend`,
 and `backend`.
 
-As more workspaces are added to your monorepo, this Action will continue to
+As more workspaces are added to your monorepo, this action will continue to
 determine targets accurately without any manual reconfiguration.
 
 ```yaml
@@ -90,7 +90,7 @@ jobs:
 ```yaml
 inputs:
   files:
-    description: Array of all changed files to validate, encoded as a JSON array
+    description: The list of all changed files to validate, encoded as a JSON array
     required: true
 
 outputs:
