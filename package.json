@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "GitHub Action to determine modified workspaces and their dependents from a set of changed files.",
-  "main": "src/main.ts",
+  "main": "dist/index.js",
   "scripts": {
     "build": "ncc build --source-map"
   },
