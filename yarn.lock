@@ -28,10 +28,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.14.31":
-  version: 14.14.31
-  resolution: "@types/node@npm:14.14.31"
-  checksum: 635dc8a0898a923621e02ca179e17baa39fdfa44f0096fcc1b7046c9b32317e74a99956a7b45ca0e8069874f51f4e7873a418239a318a4b6e7936f6510ac5992
+"@types/node@npm:^16":
+  version: 16.18.13
+  resolution: "@types/node@npm:16.18.13"
+  checksum: 054582c332040a0c5cf57d45a7b5d00a797c45f089a510df6451bf314d8463acaf9791b9b9da3f752d75df9d82f1d54e2c30c0cb41df993582875260ecad11ed
   languageName: node
   linkType: hard
 
@@ -1036,7 +1036,7 @@ typescript@^4.1.5:
   dependencies:
     "@actions/core": ^1.2.6
     "@actions/exec": ^1.0.4
-    "@types/node": ^14.14.31
+    "@types/node": ^16
     "@vercel/ncc": ^0.27.0
     pkg-dir: ^5.0.0
     typescript: ^4.1.5
