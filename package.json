@@ -19,7 +19,7 @@
   "author": "Sargun Vohra <sargun.vohra@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.6",
+    "@actions/core": "^1.10.0",
     "@actions/exec": "^1.0.4",
     "pkg-dir": "^5.0.0"
   },
