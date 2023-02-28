@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "GitHub Action to determine modified workspaces and their dependents from a set of changed files.",
-  "main": "src/main.ts",
+  "main": "dist/index.js",
   "scripts": {
     "build": "ncc build --source-map"
   },
@@ -19,12 +19,12 @@
   "author": "Sargun Vohra <sargun.vohra@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.6",
+    "@actions/core": "^1.10.0",
     "@actions/exec": "^1.0.4",
     "pkg-dir": "^5.0.0"
   },
   "devDependencies": {
-    "@types/node": "^14.14.31",
+    "@types/node": "^16",
     "@vercel/ncc": "^0.27.0",
     "typescript": "^4.1.5"
   }

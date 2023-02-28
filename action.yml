@@ -15,5 +15,5 @@ outputs:
     description: The list of Yarn workspaces to test, encoded as a JSON array
 
 runs:
-  using: node12
+  using: node16
   main: dist/index.js
